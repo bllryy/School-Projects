@@ -38,67 +38,53 @@ def main():
         if option == 3: # List the accounts
             print(people)
 
-        #if option == 4: # Transfer Money
+        elif option == 4:   # Transfer money to new accounts
+            recipient = input("Enter the name of the account to transfer to: ") # Account to transfer the money
+            if recipient not in people:
+                print("Recipient account not found.")
+                continue
 
-        #if option 
+
+            amount = int(input("Enter the amount to transfer: ")) # rlly confusting :3
+            amount = int(input("Enter amount to transfer: "))   # like everything below
+
+            if amount <= people[name_enter]:
+                people[name_enter] -= amount
+                people[recipient] += amount
+                print(f"Transfered {amount} from {name_enter} to {recipient}")  # Printing What happens
+                print(f"New balance for {name_enter}: {people[name_enter]}")
+                print(f"New balance for {recipient}: {people[recipient]}")
+
+            else:
+                print("No funds...")
 
 
+        elif option == 5:  # Add/Remove an account
+            add_or_remove_action = input("Would you like to Add or Remove an account? (A/R): ").lower() # add_or_remove_action var for adding new accounts or removing them
 
-########
-        if option == 4:
-        def transfer_money():
-            print("Accounts available:")
-    for people in people.keys():
-        print(people)
-    
-    sender = input("Enter the name of the sender: ")
-    recipient = input("Enter the name of the recipient: ")
-    
-    if sender not in people:
-        print(f"Sender '{sender}' not found.")
-        return main()
-    
-    if recipient not in people:
-        print(f"Recipient '{recipient}' not found.")
-        return main()
-    
-    amount = float(input("Enter the amount to transfer: $"))
-    
-    if amount > people[sender]:
-        print(f"Insufficient balance in {sender}'s account.")
-    else:
-        people[sender] -= amount
-        people[recipient] += amount
-        print(f"Transferred ${amount} from {sender} to {recipient}.")
-        print(f"New balance for {sender}: ${people[sender]}")
-        print(f"New balance for {recipient}: ${people[recipient]}")
+            if add_or_remove_action == 'a':
+                new_account = input("Enter the new account name: ")
+                initial_balance = int(input("Enter the initial balance: ")) # var for adding a new balance if pressed a for add
+                people[new_account] = initial_balance   # then add to the people dict. above
+                print(f"Account {new_account} added with balance {initial_balance}.")   # now print the new account and the blaance you put in
 
-    main()
+            elif add_or_remove_action == 'r':   # if the person wants to remove a account
+                account_to_remove = input("Enter the account name to remove: ")
 
-def leave_program():
-    check = True
-    while check:
-        print("Would you like to leave the program?")
-        desc = input("Yes or No?: ").lower()
+                if account_to_remove in people: 
+                    del people[account_to_remove]   # del for deleting a person out of the people dict.
+                    print(f"Account {account_to_remove} removed.")  # print ^^^
 
-        if desc == "yes":
-            exit()
-        elif desc == "no":
-            main()
-        else:
-            print("Invalid input. Please enter 'Yes' or 'No'.")
+                else:
+                    print("Account not found.")
 
-main()
-        
+            else:
+                print("Invalid option. Please enter 'A' or 'R'.")
     
 
 
-
-
-#######
-
-    #if option == 6:
-        
+        if option == 6: # Start to leave the program
+            leave_program()
 
 
 
@@ -127,6 +113,10 @@ def leave_program(): # exiting the program
 if __name__ == "__main__":
     main()
     leave_program()
+
+
+
+
 
 
 
