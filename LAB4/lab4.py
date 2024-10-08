@@ -126,7 +126,11 @@ def read_write_txt():
     #outfile.write(initial_balance + "\n")
     outfile.write(str(people))
 
-    outfile.close
+    
+    print(people)
+
+
+    outfile.close()
 
 
 
