@@ -120,15 +120,21 @@ def add_remove():
 
 
 def read_write_txt():
-    outfile = open("All_accounts_written.txt", "w")
+    outfile = open("All_accounts_written.txt", "w") # variable for writing the .txt file
 
     #outfile.write(new_account + "\n")
     #outfile.write(initial_balance + "\n")
     outfile.write(str(people))
-
     
-    print(people)
 
+
+    outfile_read = input("Would you like to read the file?: y/n ") # variable for the users input 
+
+    if outfile_read ==  'y':
+        print(people)
+
+    elif outfile_read == 'n':
+        main()
 
     outfile.close()
 
@@ -155,14 +161,9 @@ def leave_program(): # exiting the program function
             print("Exiting the program...")
             exit()  # Varible that kills the whole thing
         
-        if desc == "no":
+        if desc.lower() == "no":
             print("Returning to main...")
-            main()  # Goes back to main
-
-        else:
-            print("Wront input...")
-            leave_program() # Re-runs the "leave_program" function again    
-        
+            main()  # Goes back to main        
     
         
         
