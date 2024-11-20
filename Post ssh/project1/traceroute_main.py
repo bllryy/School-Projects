@@ -106,6 +106,8 @@ def traceroute(destination, max_hops=5, timeout=5, log_file ="traceroute_outfile
         print(completion_msg.strip())
         file.write(completion_msg)
 
+# below does not do like anything
+
 def geolocate(ip):
     # ex using ipinfo.io
     url = f"https://ipinfo.io/{ip}/json" # change ip to what ever
@@ -123,16 +125,16 @@ def plot_hops(hops): # again change when ready
     base_map = folium.Map(location=hops[0], zoom_start=4)
 
     # add markers for each loop
-    for index, (lat, lon) in enumerate(hops, start=1)
-        if lat and lan:
-            folium.Marker(
-                location=(lat, lan),
-                poput=f"Hop {index}"
-                icon = folium.Icon(color="blue", icon="info-sign")
-            ).add_to(base_map)
-
+    for index, (lat, lon) in enumerate(hops, start=1):
+        if lat and lon:
+            folium.Marker().addto(base_map)
+            location=(lat, lon),
+            poput=f"Hop {index}"
+            icon = folium.Icon(color="blue", icon="info-sign") # icons for map??????
+            
         # save to a html
         base_map.save('tracdroute_map.html')
+
 
 
 if __name__ == "__main__":
