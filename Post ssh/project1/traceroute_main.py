@@ -31,6 +31,7 @@ import sys
 import geopy
 import requests
 import folium
+import IP2Trace
 
 
 
@@ -106,37 +107,52 @@ def traceroute(destination, max_hops=5, timeout=5, log_file ="traceroute_outfile
         print(completion_msg.strip())
         file.write(completion_msg)
 
-# below does not do like anything
+# does not work below
 
 def geolocate(ip):
-    # ex using ipinfo.io
-    url = f"https://ipinfo.io/{ip}/json" # change ip to what ever
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        loc = data.get("loc", None) # loc returns "lat and long"
-        if loc:
-            lat, lan = map(float, loc.split(','))
-            return lat, lan
+    global ipinfo 
+
+    if not ip:
         return None, None
+    handler = ipinfo.getHandler(token) # either pass token or make it a global
+    details = handler.getDetails(ip)
+    loc = details.loc
+    if loc:
+        return map(float, loc.split(","))
+    return None, None
 
-def plot_hops(hops): # again change when ready
-    # create a map centered at the first hop
-    base_map = folium.Map(location=hops[0], zoom_start=4)
-
-    # add markers for each loop
-    for index, (lat, lon) in enumerate(hops, start=1):
+def plot_hops(hops, token): # put in the 
+    geolocations = []
+    for ip in hops:
+        if ip:
+            lat, lon = geolocations(ip, token)
         if lat and lon:
-            folium.Marker().addto(base_map)
+                geolocations.append((lat, lon))
+        
+    if not geolocations:
+        print("No valid geolocations to plot...")
+        return
+    map_center = geolocations[0]
+    base_map = folium.Map(location=map_center, zoom_start=4)
+
+    for i, (lat, lon) in enumerate(geolocations, start=1):
+        folium.Marker(
             location=(lat, lon),
-            poput=f"Hop {index}"
-            icon = folium.Icon(color="blue", icon="info-sign") # icons for map??????
-            
-        # save to a html
-        base_map.save('tracdroute_map.html')
+            popup=f"Hop {i}",
+            icon=folium.Icon(color="blue", icon="info-sign")
+        ).add_to(base_map)
+
+    folium.PolyLine(geolocations, color="blue").add_to(base_map)
+    base_map.save("traceroute_map.html")
+    print("Map saved to traceroute_map.html")
 
 
 
 if __name__ == "__main__":
     destination = input("Enter the IP address or domain name of the destination: ")
     traceroute(destination)
+    token = "" # get from web
+    hops = traceroute(destination)  # Ensure this function returns hops
+    plot_hops(hops, token)
+
+    # check desktop for the ipinfo signin info
