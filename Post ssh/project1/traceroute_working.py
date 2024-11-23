@@ -17,22 +17,38 @@ also web version in a website to get the line limit
 
 while loop goes over and prints first location, second location, third, etc...
 while ttl <= max_hops do while
+
+make .json file
+switch imports around
 """
 
 
 
 import socket
 import time
-#from scapy.all import *
 import folium
+import json
+import requests
+from geoip2.database import Reader
+
+
+def geolocate(ip, reader):
+    """fetch the lat and long from the geoip2 db"""
+    try:
+        response = reader.city(ip)
+        return response.location.latitude, response.location.longitude
+    except:
+        print(f"No Response from {ip}...")
+        return None, None
 
 
 
-def traceroute(destination, max_hops=5, timeout=5, log_file ="traceroute_outfile.txt"):
+def traceroute(destination, max_hops=5, timeout=5, log_file ="traceroute_outfile.json"):
     # get the destination IP address
     dest_ip = socket.gethostbyname(destination)
     print(f"Traceroute to {destination} ({dest_ip}), max {max_hops} hops.")
-    
+    """
+    WAS AT LINE 50 FOR THE .TXT
     # Open the log file
     with open(log_file, "w") as file:
         # Header for the log file
@@ -42,30 +58,62 @@ def traceroute(destination, max_hops=5, timeout=5, log_file ="traceroute_outfile
         # hops
         hops = []
         ttl = 1
-
-
-        while ttl <= max_hops:
-
+"""
+    # open the db
+    Reader = Reader(db_path)
+    ttl = 1
+    while ttl <= max_hops:
             start_time = time.time() # idk where to put this
+
 
             # create send/recieve socket
             recv_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_ICMP)
             send_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-
+            send_socket.socket.opt(socket.SQL_IP, socket.IP_TTL, ttl)
+            recv_socket.settimeout(timeout)
+            """
             # Set the ttl for out
             send_socket.setsockopt(socket.SOL_IP, socket.IP_TTL, ttl)
             recv_socket.settimeout(timeout)
-
+            
             # send packet
             print(f"Sending packet with TTL = {ttl}...")
             send_socket.sendto(b'', (dest_ip, 33434))
-
+            """
 
         # try recieve
             try:
+                send_socket.sendto(b''(dest_ip,33434))
                 data, addr = recv_socket.recvfrom(512)
                 end_time = time.time()
                 rtt = round((end_time - start_time) * 1000, 2) # rount trip time
+
+                ip_address = addr[0]
+                lat, lon = geolocate(ip_address, Reader)
+                hop_info = {
+                    "hop": ttl,
+                    "ip": ip_address,
+                    "rtt_ms": rtt,
+                    "latitude": lat,
+                    "longitude": lon
+                }
+                traceroute_data["Hops"].append(hop_info)
+
+                print(f"{ttl}\t{ip_address}\t{rtt} ms\tLocation: ({lat}, {lon})")
+
+                if ip_address == dest_ip:
+                    print("Reached Destination...")
+                    break
+            except socket.timeout:
+                traceroute_data["hops"].append({
+                "hop": ttl,
+                "ip": None,
+                "rtt_ms": None,
+                "latitude": None,
+                "longitude": None
+            })
+            """TODO: print request timeout, and close the sockets, then write the file and fix below"""
+
                 
 
                 # print and log the hop information
@@ -115,7 +163,7 @@ if __name__ == "__main__":
 
 
 # does not work below
-"""
+
 def geolocate(ip):
     global ipinfo 
 
