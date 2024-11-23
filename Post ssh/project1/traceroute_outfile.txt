@@ -1,8 +1,8 @@
-Traceroute to google.com (142.250.65.174), max 5 hops: 
-1	172.16.96.1	11.82 ms
-2	10.10.3.2	6.57 ms
-3	107.0.36.177	4.87 ms
-4	24.104.74.81	6.34 ms
+Traceroute to google.com (142.251.40.206), max 5 hops: 
+1	172.20.10.1	9.37 ms
+2	107.243.2.7	47.49 ms
+3	Request time out... 
+4	Request time out... 
 5	Request time out... 
 
 Traceroute complete.
