@@ -42,45 +42,22 @@ def geolocate(ip, reader):
         return None, None
 
 
-
 def traceroute(destination, max_hops=5, timeout=5, log_file ="traceroute_outfile.json"):
     # get the destination IP address
     dest_ip = socket.gethostbyname(destination)
-    print(f"Traceroute to {destination} ({dest_ip}), max {max_hops} hops.")
-    """
-    WAS AT LINE 50 FOR THE .TXT
-    # Open the log file
-    with open(log_file, "w") as file:
-        # Header for the log file
-        header = (f"Traceroute to {destination} ({dest_ip}), max {max_hops} hops: \n")
-        file.write(header)
-
-        # hops
-        hops = []
-        ttl = 1
-"""
+    print(f"Traceroute to {destination} ({dest_ip}), max {max_hops} hops.")  
     # open the db
     Reader = Reader(db_path)
     ttl = 1
     while ttl <= max_hops:
             start_time = time.time() # idk where to put this
 
-
             # create send/recieve socket
             recv_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_ICMP)
             send_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
             send_socket.socket.opt(socket.SQL_IP, socket.IP_TTL, ttl)
             recv_socket.settimeout(timeout)
-            """
-            # Set the ttl for out
-            send_socket.setsockopt(socket.SOL_IP, socket.IP_TTL, ttl)
-            recv_socket.settimeout(timeout)
-            
-            # send packet
-            print(f"Sending packet with TTL = {ttl}...")
-            send_socket.sendto(b'', (dest_ip, 33434))
-            """
-
+        
         # try recieve
             try:
                 send_socket.sendto(b''(dest_ip,33434))
@@ -106,47 +83,27 @@ def traceroute(destination, max_hops=5, timeout=5, log_file ="traceroute_outfile
                     break
             except socket.timeout:
                 traceroute_data["hops"].append({
-                "hop": ttl,
-                "ip": None,
-                "rtt_ms": None,
-                "latitude": None,
-                "longitude": None
-            })
-            """TODO: print request timeout, and close the sockets, then write the file and fix below"""
-
-                
-
-                # print and log the hop information
-                hop_info = (f"{ttl}\t{addr[0]}\t{rtt} ms\n")
-                print(hop_info.strip())
-                file.write(hop_info)
-
-                hops.append(addr[0])
-
-                # check for destination (also to end the try statement)
-                if addr[0] == dest_ip:
-                    print("Reached!")
-                    file.write('Reached destination.\n')
-                    break
-
-            except socket.timeout:
-                # Timeouts
-                timeout_msg = (f"{ttl}\tRequest time out... \n")
-                print(timeout_msg.strip())
-                file.write(timeout_msg)
-            
+                    "hop": ttl,
+                    "ip": None,
+                    "rtt_ms": None,
+                    "latitude": None,
+                    "longitude": None
+                })
+                print(f"{ttl}\tRequest timed out...")
             finally:
-                # clean the sockets
                 recv_socket.close()
-                send_socket.close()
+                send_socket.close
 
-            # Inciment for the next jump...
             ttl += 1
 
-        # print the completion messg
-        completion_msg = ("\nTraceroute complete.\n")
-        print(completion_msg.strip())
-        file.write(completion_msg)
+    Reader.close()  # close db
+
+    # save to file
+    with open(log_file, "w") as file:
+        json.dump(traceroute_data, file, indent=4)
+
+    print(f"\nTraceroute complete... everything saved to {log_file}...")
+                
 
 
 
@@ -161,7 +118,7 @@ if __name__ == "__main__":
 
 
 
-
+"""
 # does not work below
 
 def geolocate(ip):
@@ -200,9 +157,56 @@ def plot_hops(hops, token): # put in the
     folium.PolyLine(geolocations, color="blue").add_to(base_map)
     base_map.save("traceroute_map.html")
     print("Map saved to traceroute_map.html")
-"""
-"""
+
+
 token = "" # get from web
     hops = traceroute(destination)  # Ensure this function returns hops
     plot_hops(hops, token)
+    
+
+
+                # print and log the hop information
+                hop_info = (f"{ttl}\t{addr[0]}\t{rtt} ms\n")
+                print(hop_info.strip())
+                file.write(hop_info)
+
+                hops.append(addr[0])
+
+                # check for destination (also to end the try statement)
+                if addr[0] == dest_ip:
+                    print("Reached!")
+                    file.write('Reached destination.\n')
+                    break
+
+            except socket.timeout:
+                # Timeouts
+                timeout_msg = (f"{ttl}\tRequest time out... \n")
+                print(timeout_msg.strip())
+                file.write(timeout_msg)
+            
+            finally:
+                # clean the sockets
+                recv_socket.close()
+                send_socket.close()
+
+            # Inciment for the next jump...
+            ttl += 1
+
+        # print the completion messg
+        completion_msg = ("\nTraceroute complete.\n")
+        print(completion_msg.strip())
+        file.write(completion_msg)
+"""
+
+"""
+    WAS AT LINE 50 FOR THE .TXT
+    # Open the log file
+    with open(log_file, "w") as file:
+        # Header for the log file
+        header = (f"Traceroute to {destination} ({dest_ip}), max {max_hops} hops: \n")
+        file.write(header)
+
+        # hops
+        hops = []
+        ttl = 1
 """
