@@ -30,6 +30,7 @@ import folium
 import json
 import requests
 from geoip2.database import Reader
+import geoip2.database
 
 
 def geolocate(ip, reader):
@@ -47,7 +48,7 @@ def traceroute(destination, max_hops=5, timeout=5, log_file ="traceroute_outfile
     dest_ip = socket.gethostbyname(destination)
     print(f"Traceroute to {destination} ({dest_ip}), max {max_hops} hops.")  
     # open the db
-    Reader = Reader(db_path)
+    Reader = Reader(geoip2.database)
     ttl = 1
     while ttl <= max_hops:
             start_time = time.time() # idk where to put this
@@ -61,7 +62,7 @@ def traceroute(destination, max_hops=5, timeout=5, log_file ="traceroute_outfile
         # try recieve
             try:
                 send_socket.sendto(b''(dest_ip,33434))
-                data, addr = recv_socket.recvfrom(512)
+                traceroute_data, addr = recv_socket.recvfrom(512)
                 end_time = time.time()
                 rtt = round((end_time - start_time) * 1000, 2) # rount trip time
 
