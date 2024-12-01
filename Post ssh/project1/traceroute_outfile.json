@@ -1,0 +1,174 @@
+{
+    "destination": "google.com",
+    "destination_ip": "142.250.65.206",
+    "hops": [
+        {
+            "hop": 1,
+            "ip": "172.28.127.250",
+            "rtt_ms": 2.21,
+            "latitude": "0.000000",
+            "longitude": "0.000000",
+            "country": "-"
+        },
+        {
+            "hop": 2,
+            "ip": "10.0.28.1",
+            "rtt_ms": 4.04,
+            "latitude": "0.000000",
+            "longitude": "0.000000",
+            "country": "-"
+        },
+        {
+            "hop": 3,
+            "ip": "10.0.28.100",
+            "rtt_ms": 2.47,
+            "latitude": "0.000000",
+            "longitude": "0.000000",
+            "country": "-"
+        },
+        {
+            "hop": 4,
+            "ip": "50.173.97.30",
+            "rtt_ms": 4.01,
+            "latitude": "40.037880",
+            "longitude": "-76.305511",
+            "country": "United States of America"
+        },
+        {
+            "hop": 5,
+            "ip": "50.173.96.241",
+            "rtt_ms": 3.2,
+            "latitude": "40.340969",
+            "longitude": "-76.411575",
+            "country": "United States of America"
+        },
+        {
+            "hop": 6,
+            "ip": "24.124.149.165",
+            "rtt_ms": 5.52,
+            "latitude": "42.031448",
+            "longitude": "-80.255341",
+            "country": "United States of America"
+        },
+        {
+            "hop": 7,
+            "ip": "69.139.168.141",
+            "rtt_ms": 13.44,
+            "latitude": "40.440620",
+            "longitude": "-79.995888",
+            "country": "United States of America"
+        },
+        {
+            "hop": 8,
+            "ip": "96.110.42.165",
+            "rtt_ms": 13.56,
+            "latitude": "40.440620",
+            "longitude": "-79.995888",
+            "country": "United States of America"
+        },
+        {
+            "hop": 9,
+            "ip": "96.110.38.142",
+            "rtt_ms": 13.43,
+            "latitude": "41.771000",
+            "longitude": "-88.153046",
+            "country": "United States of America"
+        },
+        {
+            "hop": 10,
+            "ip": "96.110.39.165",
+            "rtt_ms": 18.57,
+            "latitude": "39.623463",
+            "longitude": "-104.837601",
+            "country": "United States of America"
+        },
+        {
+            "hop": 11,
+            "ip": "96.110.34.122",
+            "rtt_ms": 21.27,
+            "latitude": "33.748795",
+            "longitude": "-84.387543",
+            "country": "United States of America"
+        },
+        {
+            "hop": 12,
+            "ip": null,
+            "rtt_ms": null,
+            "latitude": null,
+            "longitude": null,
+            "country": null
+        },
+        {
+            "hop": 13,
+            "ip": null,
+            "rtt_ms": null,
+            "latitude": null,
+            "longitude": null,
+            "country": null
+        },
+        {
+            "hop": 14,
+            "ip": null,
+            "rtt_ms": null,
+            "latitude": null,
+            "longitude": null,
+            "country": null
+        },
+        {
+            "hop": 15,
+            "ip": "192.178.248.40",
+            "rtt_ms": 27.25,
+            "latitude": "37.405991",
+            "longitude": "-122.078514",
+            "country": "United States of America"
+        },
+        {
+            "hop": 16,
+            "ip": "216.239.35.162",
+            "rtt_ms": 21.82,
+            "latitude": "37.405991",
+            "longitude": "-122.078514",
+            "country": "United States of America"
+        },
+        {
+            "hop": 17,
+            "ip": "142.251.227.117",
+            "rtt_ms": 22.77,
+            "latitude": "37.405991",
+            "longitude": "-122.078514",
+            "country": "United States of America"
+        },
+        {
+            "hop": 18,
+            "ip": "142.251.69.194",
+            "rtt_ms": 22.99,
+            "latitude": "37.405991",
+            "longitude": "-122.078514",
+            "country": "United States of America"
+        },
+        {
+            "hop": 19,
+            "ip": "142.251.60.239",
+            "rtt_ms": 21.58,
+            "latitude": "37.405991",
+            "longitude": "-122.078514",
+            "country": "United States of America"
+        },
+        {
+            "hop": 20,
+            "ip": "142.251.60.237",
+            "rtt_ms": 22.17,
+            "latitude": "37.405991",
+            "longitude": "-122.078514",
+            "country": "United States of America"
+        },
+        {
+            "hop": 21,
+            "ip": "142.250.65.206",
+            "rtt_ms": 22.25,
+            "latitude": "40.713192",
+            "longitude": "-74.006065",
+            "country": "United States of America"
+        }
+    ]
+}
