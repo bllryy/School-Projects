@@ -8,6 +8,7 @@ import folium
 def traceroute(destination, max_hops=30, timeout=5, log_file="traceroute_outfile.json", db_path = "/usr/local/share/ip2location/IP2LOCATION-LITE-DB5.IPV6.BIN"):
     # expand the user home directory in the database db_path
     # db_path = os.path.expanduser(db_path)
+    #add own dir(install from the website)
 
     # Load IP2Location database
     try:
@@ -124,3 +125,6 @@ if __name__ == "__main__":
     destination = input("Enter the IP address or domain name of the destination: ")
     traceroute(destination)
 
+    # Visualize the traceroute JSON
+    json_file = "traceroute_outfile.json"  # Path to the traceroute JSON file
+    visualize_traceroute_on_map(json_file)
