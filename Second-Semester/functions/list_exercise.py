@@ -1,7 +1,7 @@
 """
 Name: github
 Section: 02
-
+Description: Functions: List Exercise
 """
 
 
@@ -11,11 +11,10 @@ Section: 02
 Function Name: main 
 Parameters: range(10) function 
 Description: for loop to get a range of users input
-Return Type: function
+Return Type: none
 """
 def main():
-    range(10)
-    for numbers in range(10):
+    for numbers in range(10):  
         printGreeting()
 
 
@@ -23,7 +22,7 @@ def main():
 Function Name: printGreeting
 Parameters: none
 Description: Users input into if statement and isEven function to check if the numbers input is even or odd
-Return Type: range in the loop above
+Return Type: none
 """
 def printGreeting():
     numbers = int(input("Enter a number to check if it is even or odd: "))
@@ -38,7 +37,7 @@ def printGreeting():
 Function Name: isEven
 Parameters: value
 Description: checks if the number is even or odd.
-Return Type: value that checks if the nmber is even or odd.
+Return Type: bool - weather it is even or odd 
 """
 def isEven(value):
     return value % 2 == 0
