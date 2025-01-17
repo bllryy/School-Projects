@@ -20,7 +20,7 @@ def getList():
     users_input_for_list = int(input("Enter the number of elements: "))
 
     for i in range(users_input_for_list):
-        element = int(input(f"Enter element {i+1}: "))  # Ensure input is numeric
+        element = int(input(f"Enter element: "))  # Ensure input is numeric
         list_of_nums.append(element)
 
     print("List:", list_of_nums)
@@ -50,8 +50,8 @@ Parameters: List
 Return Type: Float
 Description: Calculates the mean for the list and returns the value 
 """
-def getMean(userList):
-    return sum(list_of_nums) / len(list_of_nums) 
+def getMean(users_input_for_list):
+    return sum(users_input_for_list) / len(users_input_for_list) 
 
 
 """
@@ -60,15 +60,15 @@ Parameters: List
 Return Type: Float
 Description: Calculates the median for the list and returns the value  
 """
-def getMedian(userList):
+def getMedian(users_input_for_list):
     # sort the List
     userList = sorted(userList)
     mid = len(userList) // 2
     
     if len(userList) % 2 == 0:
-        return (sortedList[mid - 1] + sortedList[mid]) / 2
+        return (userList[mid - 1] + userList[mid]) / 2
     else:
-        return sortedList[mid]
+        return userList[mid]
 
 
 """ 
@@ -77,8 +77,8 @@ Parameters: List
 Return Type: Float
 Description: Finds the minimum of the unsorted list
 """
-def getMin(userList):
-    return min(list_of_nums)
+def getMin(users_input_for_list):
+    return min(users_input_for_list)
 
 """ 
 Function Name: getMax
@@ -86,8 +86,8 @@ Parameters: List
 Return Type: Float
 Description: Finds the maximum of the unsorted list
 """
-def getMax(userList):
-  return max(list_of_nums) 
+def getMax(users_input_for_list):
+  return max(users_input_for_list) 
 
 """ 
 Function Name: emptyList
@@ -104,7 +104,6 @@ def emptyList():
 def main():
     user_input = getList()
     while True:
-        getList()
         printMenu()
         user_choice = input("Enter a choice between 1-6: ")
 
@@ -136,4 +135,6 @@ def main():
             if empty_list is not None:
                 print("Empty List", empty_list)
 
-main()
+
+if __name__ == "__main__":
+    main()
