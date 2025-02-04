@@ -1,5 +1,7 @@
-get_Students = {}
-
-input_Students = input("Enter Name: "); input("Enter Grade Level: ")
-for _ in (get_Students):
-   print(get_Students)
+name = input("Enter students name: ")
+grade = int(input("Enter students grade level: "))
+email = input("Enter students email: ")
+    
+student_identificatin_for_dict = f"student{len(directory) + 1}"
+directory[student_identificatin_for_dict] = {"name": name, "grade": grade, "email": email}
+print(f"Student {name} added.")
