@@ -11,7 +11,7 @@ You are to implement this using functions, dictionaries, and lists
 """
 
 
-def getStudent(directory, student,):
+def getStudent(directory, student, gradelevel):
     """
         Function Name: getStudent
         Parameters:
@@ -29,7 +29,9 @@ def getStudent(directory, student,):
     email = input("Enter student's email: ")
     directory[name] = {"name": name, "grade": grade, "email": email, "grades": {}}
     print(f"Student {name} added successfully.")
+    name = student
 
+    gradelevel = grade
         
     pass
 
@@ -75,7 +77,7 @@ def getStudentEmail(directory,student):
     print("the students grades:", directory[student]["email"])
     pass
 
-def getStudentsByGradeLevel(directory, gradelevel):
+def getStudentsByGradeLevel(directory, gradelevel, student):
     """
         Function Name: getStudentsbyGradeLevel
         Parameters:
@@ -85,6 +87,9 @@ def getStudentsByGradeLevel(directory, gradelevel):
         Description:
             procedure that prints out all of the students of a corresponding grade level.
     """
+
+    print("the students by grade", directory[gradelevel])
+
     pass
 
 def addStudent(directory):
@@ -96,7 +101,10 @@ def addStudent(directory):
         Description:
             procedure that adds a student with the following values: <dict> grades, <int> grade level, <string> email to the <dict>directory
     """
-    add_Student_Name_Email = input("Please enter the students name: ") + directory
+    name = input("Students name: ")
+    grade = int(input("Enter the students grade level: "))
+    email = input("Enter the email: ")
+    directory[name] = {"name": name, "grade": grade, "email": email, "grades": {}}
 
     pass
 
@@ -127,6 +135,9 @@ def updateGrade(directory, student):
             procedure that updates a student's gradebook
     """
     if student in directory:
+        subject = input("Enter the student just like how it is in the hasmap: ")
+        grade = int(input("Enter the grade for teh subject: "))
+        directory[student]["grades"][subject] = grade
 
 
 
@@ -134,7 +145,7 @@ def updateGrade(directory, student):
     pass
 
 
-def calculateGPA(directory, student):
+def calculateGPA(directory, student, gpa):
     """
      Function Name: calculateGPA
         Parameters:
@@ -144,16 +155,19 @@ def calculateGPA(directory, student):
         Description:
             creates a GPA variable set equal to zero, then computes the average (mean) of all of the grades in the gradebook
     """
+    # https://stackoverflow.com/questions/7002429/how-to-extract-all-values-from-a-dictionary-in-python REMEMBTER 
+    
     if student in directory:
-        grades = directory[student]["grades"]
-        if grades:
-            return sum(grades) / len(grades)
+        grades = directory[student]["grades"].values()
+        gpa = sum(grades) / len(grades)
+        print(f"GPA is: {gpa}")
+    return gpa
 
     
     pass
 
 
-def checkHonorRoll(directory,student):
+def checkHonorRoll(directory,student, gpa):
     """
      Function Name: checkHonorRoll
         Parameters:
@@ -163,9 +177,11 @@ def checkHonorRoll(directory,student):
         Description:
             Calls the calculateGPA() subroutine that gets the GPA then checks all grades in the grade book to see if they are all over 81, then returns True or False depending on if the GPA is 88 or better
     """
-    # https://stackoverflow.com/questions/7002429/how-to-extract-all-values-from-a-dictionary-in-python REMEMBTER 
-
-    grades = directory[student]["grades"].values()
+    if student in directory:
+        if gpa <= 88:
+            print("This student is on honor roll")
+        else:
+            print("This student is not on honor roll")
     
     
 
@@ -195,30 +211,31 @@ pass
 def main(student, directory):
     #TODO: Implement every function in main
     #Students = {"Student Name": 0, "Student Email": 0, "Student Grade Level": 0, "Student GPA": 0, } 
-    student = {
-        "student1": {"name": "", "grade": 0, "email": "", "grades": 0},
-    }
+    #student = {
+    #    "student1": {"name": "", "grade": 0, "email": "", "grades": 0},
+    #}
 
     while True:
+        printMenu()
         user_choice = input("Enter a choice between 1-7: ")
 
         if user_choice == "1":
-            addStudent(student)
+            addStudent(directory)
         elif user_choice == "2":
             student_name = input("Enter the student to remove: ")
-            removeStudent(student, student_name)
+            removeStudent(student)
         elif user_choice == "3":
             student_name = input("Enter the student to retrieve: ")
-            getStudent(student, student_name)
+            getStudent(student)
         elif user_choice == "4":
             student_name = input("Enter the student to update grades: ")
-            updateGrade(student, student_name)
+            updateGrade(student)
         elif user_choice == "5":
             student_name = input("Enter the student for GPA calculation: ")
-            print(f"GPA: {calculateGPA(student, student_name)}")
+            print(f"GPA: {calculateGPA(student)}")
         elif user_choice == "6":
             student_name = input("Enter the student for grade level: ")
-            getStudentGradeLevel(student, student_name)
+            getStudentGradeLevel(student)
         elif user_choice == "7":
             exit()
             
@@ -229,5 +246,5 @@ def main(student, directory):
     pass
 
 if __name__ == "__main__":
-    main(student, directory)
+    main()
 
