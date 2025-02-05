@@ -214,30 +214,40 @@ def main(student, directory):
     #student = {
     #    "student1": {"name": "", "grade": 0, "email": "", "grades": 0},
     #}
-
+    directory = {}
     while True:
         printMenu()
         user_choice = input("Enter a choice between 1-7: ")
 
         if user_choice == "1":
             addStudent(directory)
+            
+            
         elif user_choice == "2":
             student_name = input("Enter the student to remove: ")
-            removeStudent(student)
+            removeStudent(directory, student_name)
+            
+            
         elif user_choice == "3":
             student_name = input("Enter the student to retrieve: ")
-            getStudent(student)
+            if student_name in directory:
+                print(directory[student_name])
+        
         elif user_choice == "4":
             student_name = input("Enter the student to update grades: ")
-            updateGrade(student)
+            updateGrade(directory, student_name)
+            
+            
         elif user_choice == "5":
             student_name = input("Enter the student for GPA calculation: ")
-            print(f"GPA: {calculateGPA(student)}")
+            if student_name in directory:
+                calculateGPA(directory, student_name, 0)
+            
+            
         elif user_choice == "6":
             student_name = input("Enter the student for grade level: ")
-            getStudentGradeLevel(student)
-        elif user_choice == "7":
-            exit()
+            if student_name in directory:
+                getStudentGradeLevel(directory, student_name)
             
             
             break
@@ -246,5 +256,8 @@ def main(student, directory):
     pass
 
 if __name__ == "__main__":
-    main()
+    # TODO: NEED TO ARGS CHECK STACK OVER
+    student = {}
+    directory = {}
+    main(student, directory)
 
