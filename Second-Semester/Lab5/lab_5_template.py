@@ -135,9 +135,10 @@ def updateGrade(directory, student):
             procedure that updates a student's gradebook
     """
     if student in directory:
-        subject = input("Enter the student just like how it is in the hasmap: ")
-        grade = int(input("Enter the grade for teh subject: "))
+        subject = input("Enter the subject: ")
+        grade = int(input("Enter the grade for the subject: "))
         directory[student]["grades"][subject] = grade
+        print(f"Updated {student}'s grade for {subject}.")
 
 
 
@@ -203,7 +204,8 @@ def printMenu():
     print("4. Update Grades")
     print("5. Calcualte GPA")
     print("6. Get Student Grade Level")
-    print("7. Exit")
+    print("7. Check for Student Honor Roll (GET THE GPA FIRST BEFORE CHECKING!)")
+    print("8. Exit")
 
 
 pass
@@ -217,7 +219,7 @@ def main(student, directory):
     directory = {}
     while True:
         printMenu()
-        user_choice = input("Enter a choice between 1-7: ")
+        user_choice = input("Enter a choice between 1-8: ")
 
         if user_choice == "1":
             addStudent(directory)
@@ -248,6 +250,12 @@ def main(student, directory):
             student_name = input("Enter the student for grade level: ")
             if student_name in directory:
                 getStudentGradeLevel(directory, student_name)
+
+        elif user_choice == "7":
+            student_name = input("Enter the student to check for honor roll: ")
+            if student_name in directory:
+                checkHonorRoll(directory, student_name)
+
             
             
             break

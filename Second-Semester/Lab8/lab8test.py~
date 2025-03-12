@@ -1,0 +1,5 @@
+input_string = input("Input the Text Here: ")
+ascii_the_values = ord(input_string)
+print(ascii_the_values)
+
+

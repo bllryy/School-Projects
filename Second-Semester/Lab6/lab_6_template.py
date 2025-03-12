@@ -1,0 +1,94 @@
+"""
+Name:
+Section:
+Description: Template for Lab 6
+"""
+
+"""
+Scenario: We are to build a connect 4 game that runs in the terminal
+"""
+
+def drawBoard(BOARD): 
+       for row in BOARD:
+        print('|',end = "")
+        for char in row:
+            print(char, end = '|')
+        print()
+        
+
+def switchPlayer(player,):
+       return 'O' if player == 'X' else 'X'
+
+    
+def dropPiece(board,player,COLUMN):
+    #while True:
+        for row in reversed(board):
+            if row[COLUMN] == 0:
+                row[COLUMN] = player
+                return True
+        return False  
+
+def checkWinner(board,player,COLUMNS,ROWS): 
+    # (-) win
+    for row in range(ROWS):
+        for col in range(COLUMNS - 3):
+            if (board[row][col] == board[row][col + 1] == board[row][col + 2] == board[row][col + 3] == player): 
+                return True
+    
+   # check (|) Win
+    for col in range(COLUMNS)
+        for row in range(ROWS - 3):
+            if (board[row][col] == board[row + 1][col] == board[row + 2][col] == board[row + 3][col] == player): # change from row to col for the verticle
+                return True
+
+    # check (\) win
+    for row in range(ROWS - 3):
+        for col in range(COLUMNS - 3):
+            if (board[row][col] == board[row + 1][col + 1] == board[row + 2][col + 2] == board[row + 3][col + 3] == player):
+                return True
+
+    #   (/) win
+    for row in range(3, ROWS):
+        for col in range(COLUMNS - 3):
+            if (board[row][col] == board[row - 1][col + 1] == board[row - 2][col + 2] == board[row - 3][col + 3] == player): # revers the +2 to a -2 same with the 3
+                return True
+
+    return False
+
+    
+
+def main():
+    ROWS = 6
+    COLUMNS = 7
+    BOARD = [ 
+             [0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0],        
+    ]
+
+    CURRENT_PLAYER = "X"
+
+    while True:
+        drawBoard(BOARD)
+        column = int(input(f"Player {CURRENT_PLAYER}, select a column (0-6): "))
+            
+        if 0 <= column < COLUMNS and dropPiece(BOARD, CURRENT_PLAYER, column):
+                # Check if the current move caused a win
+                if checkWinner(BOARD, CURRENT_PLAYER, COLUMNS, ROWS):
+                    drawBoard(BOARD)
+                    print(f"Player {CURRENT_PLAYER} wins!")
+                    break
+
+                # Switch player only if no one has won
+                CURRENT_PLAYER = switchPlayer(CURRENT_PLAYER)
+
+
+# or try accecpt in places be for
+
+                
+    
+if __name__ == "__main__":
+    main()
