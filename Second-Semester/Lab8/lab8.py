@@ -44,13 +44,6 @@ def totient(p,q):
     """
     return (p - 1) * (q - 1)
 
-p = int(input("Please input a prime number (p): "))
-q = int(input("Please input a prime number (q): "))
-
-print("The result of Euler's Totient Function is:", totient(p, q))
-
-
-pass
 
 
 def converttonum(message):
@@ -63,11 +56,9 @@ def converttonum(message):
         converted (_List_): List of ASCII values corresponding to the characters in message
     """
 
-    input_string = input("Input the Text to convert Here: ")
-    ascii_the_values = [ord(char) for char in input_string]
-    print("ASCII Values:", ascii_the_values)
-
-
+    ascii_the_values = ord(char) 
+    for char in message:
+        print("ASCII Values:", ascii_the_values)
 
     pass
     
@@ -132,6 +123,68 @@ def generate_key(message, key):
     print(key) 
 
 
+def vigenereEncrypt(plaintext,key):
+    """Encrypts plaintext by Vigenere Cipher.
+
+    Args:
+        plaintext (List): List of ASCII Values for plainText
+        key (List): List of ASCII Values for key
+        
+    Returns:
+        List: List of ASCII VAlues for ciphertext
+    """
+    encrypted = []
+    for i in range(len(plaintext)):
+        encrypted.append((plaintext[i] + key[i]) % 256)
+    print("encrypted value", encrypted)
+
+
+def vigenereDecrypt(Ciphertext,key):
+    """Decrypts Ciphertext by Vigenere Cipher.
+
+    Args:
+        Ciphertext (List): List of ASCII Values for CipherText
+        key (List): List of ASCII Values for key
+        
+    Returns:
+        List: List of ASCII VAlues for Plaintext
+    """
+    plaintext = []
+    for i in range(len(Ciphertext)):
+        plaintext.append((Ciphertext[i] - key[i]) % 256)
+    return plaintext
+
+def RSA(message, p, q, encry, decry):
+    """RSA Encryption Scheme: Allows for choice between encrypting or decrypting depending on if the user chooses the original exponent or the modular inverse.
+
+    Args:
+        message (String): Plaintext or Ciphertext
+        p (Integer): First Prime Number
+        q (Integer): Second Prime Number
+    """
+    
+    euler = (p -1) * (q-1)
+
+    if encry is not 0: #TODO fix later
+        ciphertext = []
+    for char in message:
+        ascii_value = ord(char) # Convert character to ASCII
+    encrypted_char = fast_mod_exp(ascii_value, encry) # Encrypt using fast modular exponentiation
+    ciphertext.append(encrypted_char) # Append the encrypted character to the ciphertext list
+    encry = 0
+
+    elif decry is not 0:
+    plaintext = []
+    for char in message:
+        decrypted_char = fast_mod_exp(message) # TODO FIX
+        plaintext.append(chr(decrypted_char)) # Convert the decrypted value back to a character
+    plaintext_message = ''.join(plaintext) # Join the decrypted characters into a single string TODO DELETE
+    print("Decrypted message:", plaintext_message)
+    return plaintext_message; decry = 0
+    
+
+
+
 def main():
     check = True
     while check:
@@ -143,21 +196,31 @@ def main():
         option  = int(input("Choose which Encryption Scheme you would like to use: "))
 
         if option == 1:
-            ascii_values = list(map(int, input("Enter ASCII values separated by spaces: ").split()))
+            message = input("Enter the message: ")
             key = int(input("Enter the shift key: "))
+            ascii_values = converttonum(message)
             shifted_values = shift(ascii_values, key)
-            #print("Shifted text:", ''.join(chr(value) for value in shifted_values))
+            print("Shifted text:", converttotext(shifted_values))
 
-            pass
         elif option == 2:
             message = input("Enter the message: ")
             key = input("Enter the key: ")
-            key_for_print = generate_key(message, key)
-            print("Extended Key:", key_for_print)
+            extended_key = generate_key(message, key)
+            print("Extended Key:", extended_key)
             
         elif option == 3:
-            print("Idk what to put here")
-            pass
+            message = input("Enter the message (or ciphertext for decryption): ")
+            p = int(input("first prime number (p): "))
+            q = int(input("second prime number (q): "))
+            encry = int(input("num for encryption or leave empty for decryption: "))
+
+            if encry > 0:
+                RSA(message, p, q, e = encry)  # encrypt
+            else:
+                decry = int(input("Enter private exponent (d) for decryption: "))
+                RSA(message, p, q, d = decry)  # decrypt
+
+
         elif option == 4:
             check = False
             
