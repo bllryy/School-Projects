@@ -42,7 +42,15 @@ def totient(p,q):
     Return:
         result of (p-1)*(q-1)
     """
-    pass
+    return (p - 1) * (q - 1)
+
+p = int(input("Please input a prime number (p): "))
+q = int(input("Please input a prime number (q): "))
+
+print("The result of Euler's Totient Function is:", totient(p, q))
+
+
+pass
 
 
 def converttonum(message):
@@ -72,6 +80,13 @@ def converttotext(message):
     Return: 
         Converted (_string_): Converted message
     """
+
+    ascii_input = input("Enter ascii values with spaces: ")
+    ascii_values = [int(num) for num in ascii_input.split()]  #  list of integers
+    text = ''.join(chr(num) for num in ascii_values)  # convert to char #TODO fixlater
+    print("Converted text:", text)
+
+
     pass
 
 
@@ -85,9 +100,20 @@ def shift(message,key):
     Returns:
         List: Shifted List of ASCII Values
     """
+    # input for ASCII values
+    ascii_values = list(map(int, input("Enter ASCII values separated by spaces (live above): ").split()))
+    key = int(input("enter the shift key: "))
+
+    # shift and display result
+    shifted_values = shift(ascii_values, key)
+    text = ''.join(chr(value) for value in shifted_values)
+    print("new text:", text)
+    
     pass
 
 def generate_key(message, key):
+
+
     """Generates Extended Key (if needed) for Vigenere Cipher
 
     Args:
@@ -97,6 +123,14 @@ def generate_key(message, key):
     Returns:
         String: Extended (or original) Key
     """
+    message = input("Please enter the key: ")
+    key = message
+
+    for i in range(len(message)):
+        key += len(key) + message
+    
+    print(key) 
+
 
 def main():
     check = True
@@ -107,11 +141,22 @@ def main():
         print("3. RSA Encryption")
         print("4. Quit")
         option  = int(input("Choose which Encryption Scheme you would like to use: "))
+
         if option == 1:
+            ascii_values = list(map(int, input("Enter ASCII values separated by spaces: ").split()))
+            key = int(input("Enter the shift key: "))
+            shifted_values = shift(ascii_values, key)
+            #print("Shifted text:", ''.join(chr(value) for value in shifted_values))
+
             pass
         elif option == 2:
-            pass
+            message = input("Enter the message: ")
+            key = input("Enter the key: ")
+            key_for_print = generate_key(message, key)
+            print("Extended Key:", key_for_print)
+            
         elif option == 3:
+            print("Idk what to put here")
             pass
         elif option == 4:
             check = False
