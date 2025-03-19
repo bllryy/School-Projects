@@ -56,13 +56,9 @@ def converttonum(message):
         converted (_List_): List of ASCII values corresponding to the characters in message
     """
 
-    ascii_the_values = ord(char) 
-    for char in message:
-        print("ASCII Values:", ascii_the_values)
-
-    pass
+    return [ord(char) for char in message]
     
-def converttotext(message):
+def converttotext(ascii_values):
     """Converts List of ASCII values to a String.
 
     Args:
@@ -72,10 +68,9 @@ def converttotext(message):
         Converted (_string_): Converted message
     """
 
-    ascii_input = input("Enter ascii values with spaces: ")
-    ascii_values = [int(num) for num in ascii_input.split()]  #  list of integers
-    text = ''.join(chr(num) for num in ascii_values)  # convert to char #TODO fixlater
-    print("Converted text:", text)
+    
+    return ''.join(chr(num) for num in ascii_values)
+    
 
 
     pass
@@ -91,16 +86,7 @@ def shift(message,key):
     Returns:
         List: Shifted List of ASCII Values
     """
-    # input for ASCII values
-    ascii_values = list(map(int, input("Enter ASCII values separated by spaces (live above): ").split()))
-    key = int(input("enter the shift key: "))
-
-    # shift and display result
-    shifted_values = shift(ascii_values, key)
-    text = ''.join(chr(value) for value in shifted_values)
-    print("new text:", text)
-    
-    pass
+    return [(value + key) % 256 for value in message]
 
 def generate_key(message, key):
 
@@ -114,13 +100,12 @@ def generate_key(message, key):
     Returns:
         String: Extended (or original) Key
     """
-    message = input("Please enter the key: ")
-    key = message
-
-    for i in range(len(message)):
-        key += len(key) + message
     
-    print(key) 
+
+    for i in range(len(message) - len(key)):
+        key += key[i]
+    
+    return key 
 
 
 def vigenereEncrypt(plaintext,key):
@@ -136,7 +121,7 @@ def vigenereEncrypt(plaintext,key):
     encrypted = []
     for i in range(len(plaintext)):
         encrypted.append((plaintext[i] + key[i]) % 256)
-    print("encrypted value", encrypted)
+    print(f"encrypted value {encrypted}")
 
 
 def vigenereDecrypt(Ciphertext,key):
@@ -163,24 +148,29 @@ def RSA(message, p, q, encry, decry):
         q (Integer): Second Prime Number
     """
     
+
+    action = input("type (encry) for encrypt and (decry) for decrypt:" )
+    
     euler = (p -1) * (q-1)
+    result = []
 
-    if encry is not 0: #TODO fix later
-        ciphertext = []
-    for char in message:
-        ascii_value = ord(char) # Convert character to ASCII
-    encrypted_char = fast_mod_exp(ascii_value, encry) # Encrypt using fast modular exponentiation
-    ciphertext.append(encrypted_char) # Append the encrypted character to the ciphertext list
-    encry = 0
+    
+    
+    if action == 'encry':
+        for char in message:
+            ascii_value = ord(char) # Convert character to ASCII
+            encrypted_char = fast_mod_exp(ascii_value, encry, euler) 
+            result.append(encrypted_char) 
+        print("Encrypted message: ", result)
+        return result
 
-    elif decry is not 0:
-    plaintext = []
-    for char in message:
-        decrypted_char = fast_mod_exp(message) # TODO FIX
-        plaintext.append(chr(decrypted_char)) # Convert the decrypted value back to a character
-    plaintext_message = ''.join(plaintext) # Join the decrypted characters into a single string TODO DELETE
-    print("Decrypted message:", plaintext_message)
-    return plaintext_message; decry = 0
+    elif action == 'decry':
+            decrypted_char = fast_mod_exp(ascii_value, encry, euler) 
+            result.append(chr(decrypted_char)) 
+    print("Decrypted message:", ''.join(result))
+    return result
+
+    
     
 
 
@@ -212,13 +202,6 @@ def main():
             message = input("Enter the message (or ciphertext for decryption): ")
             p = int(input("first prime number (p): "))
             q = int(input("second prime number (q): "))
-            encry = int(input("num for encryption or leave empty for decryption: "))
-
-            if encry > 0:
-                RSA(message, p, q, e = encry)  # encrypt
-            else:
-                decry = int(input("Enter private exponent (d) for decryption: "))
-                RSA(message, p, q, d = decry)  # decrypt
 
 
         elif option == 4:
