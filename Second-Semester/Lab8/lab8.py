@@ -149,26 +149,28 @@ def RSA(message, p, q, encry, decry):
     """
     
 
-    action = input("type (encry) for encrypt and (decry) for decrypt:" )
-    
-    euler = (p -1) * (q-1)
+    n = p * q  # Modulus for both encryption and decryption
+    euler = (p - 1) * (q - 1)  # Euler's Totient Function
     result = []
+    
+    action = input("Type 'encry' for encryption or 'decry' for decryption: ")
 
-    
-    
     if action == 'encry':
         for char in message:
-            ascii_value = ord(char) # Convert character to ASCII
-            encrypted_char = fast_mod_exp(ascii_value, encry, euler) 
-            result.append(encrypted_char) 
-        print("Encrypted message: ", result)
+            ascii_value = ord(char)  # Convert character to ASCII
+            encrypted_char = fast_mod_exp(ascii_value, encry, n)  # Encryption
+            result.append(encrypted_char)
+        print("Encrypted message:", result)
         return result
 
+
+
     elif action == 'decry':
-            decrypted_char = fast_mod_exp(ascii_value, encry, euler) 
-            result.append(chr(decrypted_char)) 
-    print("Decrypted message:", ''.join(result))
-    return result
+        for encrypted_value in message:  # Assuming message is a list of encrypted values
+            decrypted_char = fast_mod_exp(encrypted_value, decry, n)  # Decryption
+            result.append(chr(decrypted_char))  # Convert back to characters
+        print("Decrypted message:", ''.join(result))
+        return result
 
     
     
@@ -200,8 +202,17 @@ def main():
             
         elif option == 3:
             message = input("Enter the message (or ciphertext for decryption): ")
-            p = int(input("first prime number (p): "))
-            q = int(input("second prime number (q): "))
+            p = int(input("First prime number (p): "))
+            q = int(input("Second prime number (q): "))
+            
+            
+            encry = int(input("Enter the public exponent (e): "))
+            decry = modInverse(encry, (p - 1) * (q - 1)) 
+
+
+            encrypted_message = RSA(message, p, q, encry, decry)  # Encrypt
+            
+            print("Encrypted message: ", encrypted_message)
 
 
         elif option == 4:
