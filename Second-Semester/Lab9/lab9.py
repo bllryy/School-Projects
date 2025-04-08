@@ -16,7 +16,7 @@ check the board given if it is correct (scoreGame())
 """
 
 
-def loadBoard(filename,board):
+def loadBoard(filename):
     with open(filename, 'r') as file:
         board = [list(line.strip()) for line in file if line.strip()]
     return board
@@ -37,47 +37,50 @@ RECURSIVE CASE
 
 """
 
-
+"""
 # TODO: feeling two for loops to go though every cell on the board
 def scoreGame(board,current_player,score,x,y):
     if x == len(board)-1 and y == len(board[0])-1:
         return score
-   
-    if board[x]=="B" or "W":
-        board[x]=board[x+1]
-
-
     if board[x][y]== "B":
         scoreGame(board,current_player,score,x+1,y)
         scoreGame(board,current_player,score,x,y+1)
     if board[x][y]== "W":
-
+        pass
+"""
 
 
         
 def switchPlayer(current_player):
     return 'W' if current_player == 'B' else 'B'
 
-
+def find_inside(board):
+        for x  in range(len(board)):
+            for y in range (len(board[0])):
+                    if board [x][y] == 'B':
+                        if board [x][y+1] == 'B':
+                            return [x,y +1 ]
+                        if board [y+] [x+1] 
+                        
 
 def floodfill(x,y, color , visited, board):
     # check for the out of bounds
     # check for already visitied
     # found a dot
     # diff color
-    if x < 0 or x>= len(board) or y < 0 or y >= len(board[0])
-
-    if (x,y) is  visited:
-        return True
-    # TODO NEED SOMTHIG BETWEEN THE RETURN AND THTE BOOL like a group of the stuff
-    if board[x][y] == '.':
-        return True  # a dot
-
-    if board[x][y] != color:
-        return False  # dif color
-
+    if x < 0 or x>= len(board) or y < 0 or y >= len(board[0]):
+        if (x,y) is  visited:
+            return True
+        # TODO NEED SOMTHIG BETWEEN THE RETURN AND THTE BOOL like a group of the stuff
+        if board[x][y] == '.':
+            return True  # a dot
+        if board[x][y] != color:
+            return False  # dif color
+    #two algorithms; one that searches the parameters, the other that searches 
     group = {(x,y)}
     has_dot = False
+
+    
 
     """
     ALSO A SET COULD WORK
@@ -121,15 +124,15 @@ def printBoard(board):
         print()
 
 def main():
-    board = loadBoard("testcase1")
-    score = = scoreGame(board)
+    board = loadBoard("testcase.txt")
+    #score = scoreGame(board)
 
     print("\nBoard after the capture:")
     printBoard(board)
-
+    floodfill(0,0)
     print("\nCaptured stones:")
-    print("Black captured", score['W'], "white stones.")
-    print("White captured", score['B'], "black stones.")
+    #print("Black captured", score['W'], "white stones.")
+    #print("White captured", score['B'], "black stones.")
 
     
 if __name__ == "__main__":
