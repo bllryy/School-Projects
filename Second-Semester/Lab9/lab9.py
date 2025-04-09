@@ -50,71 +50,60 @@ def scoreGame(board,current_player,score,x,y):
 """
 
 
+"""
+While x,y < bottom right of the board
+    Find inside 
+    Flood Fill
+    Reset x,y = 0 
+
+    
+Score game
+    
+
+
+"""
+
+
         
 def switchPlayer(current_player):
     return 'W' if current_player == 'B' else 'B'
 
-def find_inside(board):
+def find_inside(board, color):
         for x  in range(len(board)):
             for y in range (len(board[0])):
-                    if board [x][y] == 'B':
-                        if board [x][y+1] == 'B':
-                            return [x,y +1 ]
-                        if board [y+] [x+1] 
-                        
-
-def floodfill(x,y, color , visited, board):
-    # check for the out of bounds
-    # check for already visitied
-    # found a dot
-    # diff color
-    if x < 0 or x>= len(board) or y < 0 or y >= len(board[0]):
-        if (x,y) is  visited:
-            return True
-        # TODO NEED SOMTHIG BETWEEN THE RETURN AND THTE BOOL like a group of the stuff
-        if board[x][y] == '.':
-            return True  # a dot
-        if board[x][y] != color:
-            return False  # dif color
-    #two algorithms; one that searches the parameters, the other that searches 
-    group = {(x,y)}
-    has_dot = False
-
-    
-
-    """
-    ALSO A SET COULD WORK
-    
-    check for all four directions from the current x,y
-    collect all connected stones of the same color
-    check if any of them have a dot or a liberity
-
-    start with the all four directions d
-    calc the neighbors cords n
-    then recursively continue from that neighbor
-    add to a group of connected stones
-    and keep track of weather any part of the whole group as a empty space
-
-    return the group of the connected stones and if they have a empty space
-    """
-    
-
-    for dx, dy in [(-1,0), (1,0), (0,-1), (0,1)]: # hold these here for now might need to change later
-        nx, ny = x + dx, y + dy
-        new_group, has_no_space = floodfill(nx, ny, color, visited, board)
-        group.update(new_group)
-        # https://stackoverflow.com/questions/67573293/pygame-tutorial-tank-with-collision-detection
-        # https://www.w3schools.com/python/ref_set_update.asp
-
-        #has_no_space = has_no_space or 
-    
-    return group, has_no_space
+                    if board [x][y] == color:
+                        if board [x+1][y] == color:
+                            if board [x+1][y+1] == '.':
+                                return [x+1,y +1]
+                        if board [x+1] [y-1] == color:
+                            if board [x+1] [y] == '.':
+                                return [x+1,y +1]
+                        if board [x+1] [y+1] == color:
+                            if board [x+1] [y+2] == '.':
+                                return [x+1,y+2]
 
 
 
     
+def floodfill(matrix, x, y, color):
+    #"hidden" stop clause - not reinvoking for "c" or "b", only for "a".
+    if matrix[x][y] == ".":  
+        matrix[x][y] = color 
+        #recursively invoke flood fill on all surrounding cells:
+        if x > 0:
+            floodfill(matrix,x-1,y,color)
+        if x < len(matrix[y]) - 1:
+            floodfill(matrix,x+1,y,color)
+        if y > 0:
+            floodfill(matrix,x,y-1,color)
+        if y < len(matrix) - 1:
+            floodfill(matrix,x,y+1,color)
 
 
+    
+
+def sccoreGame(board):
+    pass
    
 def printBoard(board):
     for row in board:
@@ -125,12 +114,16 @@ def printBoard(board):
 
 def main():
     board = loadBoard("testcase.txt")
+    
     #score = scoreGame(board)
 
     print("\nBoard after the capture:")
     printBoard(board)
-    floodfill(0,0)
+    coords = find_inside(board, 'B')
+    print(board[coords[0]][coords[1]])
+    floodfill(board, coords[0], coords[1] , 'B')
     print("\nCaptured stones:")
+    printBoard(board)
     #print("Black captured", score['W'], "white stones.")
     #print("White captured", score['B'], "black stones.")
 
